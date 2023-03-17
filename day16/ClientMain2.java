@@ -14,7 +14,7 @@ public class ClientMain2 {
 			if (loginOk) {
 				System.out.println("1.입출금조회 2.입금 3.출금 4.계좌이체 5.비밀번호수정 6.회원탈퇴 7.로그아웃 0.종료");
 			} else {
-				System.out.println("1.회원가입 2.로그인 3.리스트 4.ID찾기 5.PW찾기 6.미정 7.미정 0.종료");
+				System.out.println("1.회원가입 2.로그인 3.리스트 4.ID찾기 5.PW찾기 6.검색 7.미정 0.종료");
 			}
 			System.out.print("메뉴 > ");
 			int menu = sc.nextInt();
@@ -26,13 +26,15 @@ public class ClientMain2 {
 				}
 			} else if (menu == 2) {
 				if (loginOk) {
-					serv.deposit();
+//					serv.deposit();
+					serv.dw(2);
 				} else {
 					loginOk = serv.loginCheck();
 				}
 			} else if (menu == 3) {
 				if (loginOk) {
-					serv.withdraw();
+//					serv.withdraw();
+					serv.dw(3);
 				} else {
 					serv.findAll();
 				}
@@ -52,7 +54,7 @@ public class ClientMain2 {
 				if (loginOk) {
 					loginOk = serv.delete();
 				} else {
-					System.out.println("아직지원되지않는서비스입니다");
+					serv.search();			
 				}
 			} else if (menu == 7) {
 				if (loginOk) {

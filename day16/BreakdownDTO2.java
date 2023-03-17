@@ -12,14 +12,14 @@ public class BreakdownDTO2 {
 	private long dealMoney;
 	private long totalMoney;
 	private String dealDate;
-	private int arrayNum;
+	private String arrayNum;
 
 	public BreakdownDTO2() {
 		this.dealDate = DTF.format(LocalDateTime.now());
-		this.arrayNum = number++;
+		this.arrayNum = account + number++;
 	}
 
-	public int getArraynum() {
+	public String getArraynum() {
 		return arrayNum;
 	}
 

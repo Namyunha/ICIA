@@ -4,6 +4,7 @@ import java.util.*;
 
 public class ClientService2 {
 	// 싱글톤패턴
+	boolean check;
 	private static ClientService2 service = new ClientService2();
 
 	private ClientService2() {
@@ -18,11 +19,38 @@ public class ClientService2 {
 	private String loginId = null;
 	private String loginPw = null;
 
+//	public void save() {
+////		BreakdownDTO2 passbook = new BreakdownDTO2();
+//		ClientDTO2 clientDTO = new ClientDTO2();
+//		System.out.print("ID > ");
+//		clientDTO.setId(sc.next());
+//		System.out.print("password > ");
+//		clientDTO.setPassword(sc.next());
+//		System.out.print("name > ");
+//		clientDTO.setName(sc.next());
+////		System.out.print("초기입금금액 > ");
+////		int money = sc.nextInt();
+////		clientDTO.setBalance(clientDTO.getBalance() + money);
+//		clientDTO.setBalance(clientDTO.getBalance());
+//		if (re.save(clientDTO)) {
+//			System.out.println("회원가입성공");
+//		} else {
+//			System.out.println("회원가입실패");
+//		}
+//	}
+
 	public void save() {
 //		BreakdownDTO2 passbook = new BreakdownDTO2();
 		ClientDTO2 clientDTO = new ClientDTO2();
-		System.out.print("ID > ");
-		clientDTO.setId(sc.next());
+		while (true) {
+			System.out.print("ID > ");
+			clientDTO.setId(sc.next());
+			if (re.duCheck(clientDTO.getId())) {
+				System.out.println("중복된 아이디가 있습니다. 다시 입력");
+				continue;
+			}
+			break;
+		}
 		System.out.print("password > ");
 		clientDTO.setPassword(sc.next());
 		System.out.print("name > ");
@@ -37,6 +65,34 @@ public class ClientService2 {
 			System.out.println("회원가입실패");
 		}
 	}
+
+//	public void save() {
+//		ClientDTO2 clientDTO2 = new ClientDTO2();
+//		System.out.print("이름 > ");
+//		clientDTO2.setName(sc.next());
+//		while (true) {
+//			System.out.print("ID > ");
+//			String id = sc.next();
+//			if (re.duCheck(id) == false) {
+//				clientDTO2.setId(id);
+//				System.out.print("PW > ");
+//				clientDTO2.setPassword(sc.next());
+//				re.save(clientDTO2);
+//				System.out.println(clientDTO2.getName() + "님의 회원가입을 축하드립니다.");
+//				break;
+//			} else {
+//				clientDTO2.setName(null);
+//				System.out.println("다시 입력하시겠습니까?");
+//				System.out.println("1.다시입력 2.종료");
+//				int menu = sc.nextInt();
+//				if (menu == 1) {
+//					continue;
+//				} else if (menu == 2) {
+//					break;
+//				}
+//			}
+//		}
+//	}
 
 	public boolean loginCheck() {
 		System.out.print("ID > ");
@@ -144,44 +200,36 @@ public class ClientService2 {
 		System.out.println(clientDTO.toString());
 		System.out.println("-----------------------------------------------------------------");
 		System.out.println("▼ 입출금내역 ▼");
-		Map<Integer, BreakdownDTO2> bMap = re.searchList(clientDTO.getAccount());
+		Map<String, BreakdownDTO2> bMap = re.searchList(clientDTO.getAccount());
 		if (bMap.size() == 0) {
 			System.out.println("입출금 내역이 없습니다.");
 		} else {
 			System.out.println("계좌번호\t\t구분\t거래금액\t거래후 잔액\t\t거래일");
-			for (Integer key : bMap.keySet()) {
+			for (String key : bMap.keySet()) {
 				System.out.println(bMap.get(key).toString());
 			}
 		}
 	}
 
-	public void deposit() {
+
+	public void dw(int i) {
 		String account = re.getAccount(loginId, loginPw);
 		if (account == null) {
 			System.out.println("로그인 오류");
 		} else {
-			System.out.println("입금 금액 > ");
+			System.out.println("금액 입력 > ");
 			long money = sc.nextLong();
-			re.deposit(account, money);
-		}
-
-	}
-
-	public void withdraw() {
-		String account = re.getAccount(loginId, loginPw);
-		if (account == null) {
-			System.out.println("로그인 오류");
-		} else {
-			System.out.println("출금 금액");
-			long money = sc.nextLong();
-			if (re.moneyCheck(money)) {
-				re.withdraw(money, account);
-				System.out.println("출금성공");
-			} else {
-				System.out.println("잔액이부족합니다");
+			if (i == 2) {
+				long a = money;
+				re.dw(a, "입금", account);
+			} else if (i == 3) {
+				long a = (-1 * money);
+				re.dw(a, "출금", account);
 			}
 		}
+
 	}
+
 
 //	public void transferMy() {
 //		System.out.println("입금할 계좌");
@@ -232,7 +280,7 @@ public class ClientService2 {
 		long dMoney = sc.nextInt();
 		if (loginUser.getBalance() < dMoney || dUser == null) {
 			if (loginUser.getBalance() < dMoney && dUser == null) {
-				System.out.println("정신차리세요");
+				System.out.println("잔액과 계좌를 확인해주세요");
 			} else if (loginUser.getBalance() > dMoney) {
 				System.out.println("잔액이 모자랍니다");
 			} else if (dUser != null) {
@@ -241,6 +289,7 @@ public class ClientService2 {
 		} else {
 			loginUser.setBalance(loginUser.getBalance() - dMoney);
 			dUser.setBalance(dUser.getBalance() + dMoney);
+//			re.breakdown(loginUser, dAccount, dMoney);
 			System.out.println("현재 잔여 금액 > " + loginUser.getBalance());
 			System.out.println("이체 완료");
 		}
@@ -263,6 +312,59 @@ public class ClientService2 {
 		}
 	}
 
+	public void search() {
+		while (true) {
+			System.out.println("1.PW검색 2.예금주 검색 0.종료");
+			System.out.print("menu > ");
+			int menu = sc.nextInt();
+			if (menu == 1) {
+				System.out.print("찾고자 하는 PW > ");
+				String pw = sc.next();
+				Map<Integer, ClientDTO2> cMap = re.searchPw(pw);
+				if (cMap == null) {
+					System.out.println("찾고자 하는 id는 없습니다.");
+					while (true) {
+						System.out.println("1.다시찾기 2.종료");
+						System.out.print("menu > ");
+						int menu2 = sc.nextInt();
+						if (menu2 == 1) {
+							continue;
+						} else if (menu == 2) {
+							break;
+						} else {
+							System.out.println("\"1\" 또는 \"2\"를 선택해주세요");
+						}
+					}
+				} else {
+					System.out.println("계좌번호\t\t구분\t거래금액\t거래후 잔액\t\t거래일");
+					for (Integer key : cMap.keySet()) {
+						System.out.println(cMap.get(key));
+					}
+					break;
+				}
+			} else if (menu == 2) {
+				System.out.print("찾고자 하는 예금주 > ");
+				String name = sc.next();
+				Map<Integer, ClientDTO2> nMap = re.findName(name);
+				if (nMap == null) {
+					System.out.println("찾고자 하는 예금주가 없습니다.");
+				} else {
+					System.out.println("계좌번호\t\t구분\t거래금액\t거래후 잔액\t\t거래일");
+					for (Integer key : nMap.keySet()) {
+						System.out.println(nMap.get(key));
+					}
+					break;
+				}
+			} else if (menu == 0) {
+				System.out.println("종료되었습니다.");
+				break;
+			} else {
+				System.out.println("숫자를 다시 입력해주세요");
+			}
+		}
+
+	}
+
 	public void searchId() {
 		while (true) {
 			System.out.println("===============ID찾기==============");
@@ -275,7 +377,6 @@ public class ClientService2 {
 				System.out.println("찾고자하는 사용자의 ID > " + searchName.getId());
 				break;
 			}
-
 		}
 	}
 
