@@ -99,7 +99,7 @@ public class ClientRepository2 {
 		}
 		return null;
 	}
-	
+
 //	public void breakdown(String loginAccount, String dAccount, long dMoney) {
 //		for(Integer key : cMap.keySet()) {
 //			if(cMap.get(key).getAccount().equals(loginAccount)){
@@ -109,8 +109,7 @@ public class ClientRepository2 {
 //			}
 //		}
 //	}
-	
-	
+
 	public void dw(long mon, String div, String account) {
 		for (Integer key : cMap.keySet()) {
 			if (account.equals(cMap.get(key).getAccount())) {
@@ -126,7 +125,7 @@ public class ClientRepository2 {
 			}
 		}
 	}
-	
+
 	public boolean moneyCheck(long money) {
 		for (Integer key : cMap.keySet()) {
 			if (cMap.get(key).getBalance() >= money)
