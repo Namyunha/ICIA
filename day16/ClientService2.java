@@ -19,26 +19,6 @@ public class ClientService2 {
 	private String loginId = null;
 	private String loginPw = null;
 
-//	public void save() {
-////		BreakdownDTO2 passbook = new BreakdownDTO2();
-//		ClientDTO2 clientDTO = new ClientDTO2();
-//		System.out.print("ID > ");
-//		clientDTO.setId(sc.next());
-//		System.out.print("password > ");
-//		clientDTO.setPassword(sc.next());
-//		System.out.print("name > ");
-//		clientDTO.setName(sc.next());
-////		System.out.print("초기입금금액 > ");
-////		int money = sc.nextInt();
-////		clientDTO.setBalance(clientDTO.getBalance() + money);
-//		clientDTO.setBalance(clientDTO.getBalance());
-//		if (re.save(clientDTO)) {
-//			System.out.println("회원가입성공");
-//		} else {
-//			System.out.println("회원가입실패");
-//		}
-//	}
-
 	public void save() {
 //		BreakdownDTO2 passbook = new BreakdownDTO2();
 		ClientDTO2 clientDTO = new ClientDTO2();
@@ -66,34 +46,6 @@ public class ClientService2 {
 		}
 	}
 
-//	public void save() {
-//		ClientDTO2 clientDTO2 = new ClientDTO2();
-//		System.out.print("이름 > ");
-//		clientDTO2.setName(sc.next());
-//		while (true) {
-//			System.out.print("ID > ");
-//			String id = sc.next();
-//			if (re.duCheck(id) == false) {
-//				clientDTO2.setId(id);
-//				System.out.print("PW > ");
-//				clientDTO2.setPassword(sc.next());
-//				re.save(clientDTO2);
-//				System.out.println(clientDTO2.getName() + "님의 회원가입을 축하드립니다.");
-//				break;
-//			} else {
-//				clientDTO2.setName(null);
-//				System.out.println("다시 입력하시겠습니까?");
-//				System.out.println("1.다시입력 2.종료");
-//				int menu = sc.nextInt();
-//				if (menu == 1) {
-//					continue;
-//				} else if (menu == 2) {
-//					break;
-//				}
-//			}
-//		}
-//	}
-
 	public boolean loginCheck() {
 		System.out.print("ID > ");
 		String id = sc.next();
@@ -109,21 +61,11 @@ public class ClientService2 {
 		}
 
 	}
-
 	public void logOut() {
 		loginId = null;
 		loginPw = null;
 		System.out.println("로그아웃");
 	}
-
-//	public void findAll() {
-//		List<ClientDTO2> cList = re.findAll();
-//		System.out.println("계좌번호\t\t아이디\t비밀번호\t예금주\t잔액\t가입일");
-//		System.out.println("-----------------------------------------------------------------");
-//		for (ClientDTO2 c : cList) {
-//			System.out.println(c.toString());
-//		}
-//	} ArrayList 버젼
 	public void findAll() {
 		Map<Integer, ClientDTO2> cMap = re.findAll();
 		System.out.println("계좌번호\t\t아이디\t비밀번호\t예금주\t잔액\t가입일");
@@ -133,7 +75,6 @@ public class ClientService2 {
 			System.out.println(string);
 		}
 	}
-
 	public boolean delete() {
 		if (re.delete(loginId, loginPw)) {
 			System.out.println("삭제성공");
@@ -145,54 +86,6 @@ public class ClientService2 {
 
 	}
 
-//	public void findById() {
-//		ClientDTO2 clientDTO = re.findById(loginId, loginPw);
-//		if (clientDTO == null) {
-//			System.out.println("로그인 오류");
-//		} else {
-//			System.out.println("계좌번호\t\t아이디\t비밀번호\t예금주\t잔액\t가입일");
-//			System.out.println("-----------------------------------------------------------------");
-//			System.out.println(clientDTO.toString());
-//			System.out.println("-----------------------------------------------------------------");
-//			System.out.println("▼ 입출금내역 ▼");
-//			List<BreakdownDTO2> bList = re.breakList(clientDTO.getAccount());
-//			if (bList.size() == 0) {
-//				System.out.println("입출금 내역이 없습니다.");
-//			} else {
-//				System.out.println("계좌번호\t\t구분\t거래금액\t거래후 잔액\t\t거래일");
-//				for (BreakdownDTO2 b : bList) {
-//					System.out.println(b.toString());
-//				}
-//			}
-//
-//			System.out.println("-----------------------------------------------------------------");
-//		}
-//
-//	}
-//	public void findById() {
-//		ClientDTO2 clientDTO = re.findById(loginId, loginPw);
-//		if (clientDTO == null) {
-//			System.out.println("로그인 오류");
-//		} else {
-//			System.out.println("계좌번호\t\t아이디\t비밀번호\t예금주\t잔액\t가입일");
-//			System.out.println("-----------------------------------------------------------------");
-//			System.out.println(clientDTO.toString());
-//			System.out.println("-----------------------------------------------------------------");
-//			System.out.println("▼ 입출금내역 ▼");
-//			Map<Integer, BreakdownDTO2> bMap = re.breakList2(clientDTO.getAccount());
-//			if (bMap.size() == 0) {
-//				System.out.println("입출금 내역이 없습니다.");
-//			} else {
-//				System.out.println("계좌번호\t\t구분\t거래금액\t거래후 잔액\t\t거래일");
-//				for (Integer key : bMap.keySet()) {
-//					System.out.println(bMap.get(key).toString());
-//				}
-//			}
-//
-//			System.out.println("-----------------------------------------------------------------");
-//		}
-//
-//	}
 	public void findById() {
 		ClientDTO2 clientDTO = re.findById(loginId, loginPw);
 		System.out.println("계좌번호\t\t아이디\t비밀번호\t예금주\t잔액\t가입일");
