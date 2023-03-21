@@ -74,13 +74,12 @@ public class UserRepository {
 		return null;
 	}
 
-	public UserDTO searchP(String name, String id, int phone, String pNum) {
+	public boolean searchP(UserDTO searchUser) {
 		for (UserDTO u : uList) {
-			if (name.equals(u.getName()) && id.equals(u.getId()) && phone == u.getPhone() && pNum.equals(u.getpNum())) {
-				return u;
+			if (searchUser.getpNum().equals(u.getpNum())) {
+				return true;
 			}
 		}
-		return null;
+		return false;
 	}
-
 }

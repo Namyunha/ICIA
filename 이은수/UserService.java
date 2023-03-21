@@ -90,44 +90,44 @@ public class UserService {
 			System.out.println("1.ID찾기 2.PW찾기 0.종료");
 			System.out.print("menu > ");
 			int menu = sc.nextInt();
-			if (menu == 1) {
+			if (menu == 1 || menu == 2) {
 				UserDTO searchUser = new UserDTO();
 				System.out.print("이름 > ");
-//				String name = sc.next();
 				searchUser.setName(sc.next());
 				System.out.print("전화번호 > ");
-//				int phone = sc.nextInt();
 				searchUser.setPhone(sc.nextInt());
 				UserDTO user = re.searchId(searchUser.getName(), searchUser.getPhone());
 				if (user != null) {
 					System.out.println("주민등록번호입력");
 					System.out.println("앞자리: ");
-					searchUser.setFirstNum(sc.nextInt());
+					int first = sc.nextInt();
 					System.out.println("뒷자리: ");
-					searchUser.setLastNum(sc.nextInt());
-					re.searchP(searchUser.getName(), searchUser.getName(), searchUser.getPhone(), searchUser.getpNum());
-					System.out.println(user.getName()+"님의 ID는 " + user.getId() + "입니다. ");
-				} else {
-					System.out.println("이름 또는 연락처를 확인해주세요");
-					continue;
+					int last = sc.nextInt();
+					searchUser.setpNum(first, last);
+					if (re.searchP(searchUser)) {
+						if (menu == 1) {
+							System.out.println(user.getName() + "님의 id는 " + user.getId() + "입니다.");
+						}
+					} else {
+						System.out.println("주민번호를 확인해주세요");
+					}
 				}
-			} else if (menu == 2) {
-				System.out.print("이름 > ");
-				String name = sc.next();
-				System.out.print("ID > ");
-				String id = sc.next();
-				System.out.print("전화번호 > ");
-				int phone = sc.nextInt();
-				UserDTO user = re.search(name, id, phone, "");
-				System.out.println(user.getPw());
+				if (menu == 2) {
+					System.out.println("ID > ");
+					String id = sc.next();
+					UserDTO pUser = re.search("", id, -1, "");
+					if (pUser != null) {
+						System.out.println(pUser.getName() + "님의 pw는 " + pUser.getPw() + "입니다.");
+					} else {
+						System.out.println("id를 확인해주세요");
+					}
+				}
 			} else if (menu == 0) {
 				break;
 			} else {
 				System.out.println("숫자를 다시 입력해주세요");
 			}
-
 		}
-
 	}
 
 	public void update() {
