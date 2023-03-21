@@ -44,7 +44,7 @@ public class UserService {
 		}
 	}
 
-	public boolean loginOk() {
+	public UserDTO loginOk() {
 		System.out.print("ID > ");
 		String id = sc.next();
 		System.out.print("PW > ");
@@ -52,14 +52,15 @@ public class UserService {
 		UserDTO userDTO = new UserDTO(id, pw);
 		if (re.returnUser(userDTO) == null) {
 			System.out.println("로그인에 실패하였습니다.");
-			return false;
+			return null;
 		} else {
 			System.out.println(re.returnUser(userDTO).getName() + "님 환영합니다");
 			loginId = id;
 			loginPw = pw;
-			return true;
+			return re.returnUser(userDTO);
 		}
 	}
+	
 
 	public void loginCheck() {
 		UserDTO userDTO = new UserDTO(loginId, loginPw);

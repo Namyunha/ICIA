@@ -2,8 +2,10 @@ package 이은수;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class UserDTO {
+	BoardRepository br = new BoardRepository();
 	private final static DateTimeFormatter DTF = DateTimeFormatter.ofPattern("yy/MM/dd hh:mm:ss");
 	private static int number = 0;
 	private int firstNum;
@@ -15,9 +17,11 @@ public class UserDTO {
 	private String pNum;
 	private String joinDate = DTF.format(LocalDateTime.now());
 	private int phone;
+	private String board;
+	private List<BoardDTO> boardList = br.list();
 
 	public UserDTO() {
-		this.uno = "U-" + ++number;
+		this.uno = "U" + ++number;
 		this.joinDate = joinDate;
 	}
 
@@ -27,6 +31,14 @@ public class UserDTO {
 		this.id = id;
 		this.pw = pw;
 		this.joinDate = joinDate;
+	}
+
+	public String getBoard() {
+		return board;
+	}
+
+	public void setBoard(String board) {
+		this.board = board;
 	}
 
 	public UserDTO(String id, String pw) {

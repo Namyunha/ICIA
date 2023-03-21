@@ -10,6 +10,15 @@ public class UserRepository {
 		return uList.add(userDTO);
 	}
 
+	public UserDTO user(String id, String pw) {
+		for (UserDTO u : uList) {
+			if (id.equals(u.getId()) && pw.equals(u.getPw())) {
+				return u;
+			}
+		}
+		return null;
+	}
+
 	public List<UserDTO> list() {
 		return uList;
 	}
@@ -67,9 +76,7 @@ public class UserRepository {
 
 	public UserDTO searchId(String name, int phone) {
 		if (search(name, "", -3, "") != null) {
-			if (search(name, "", phone, "") != null) {
-				return search(name, "", phone, "");
-			}
+			return search("", "", phone, "");
 		}
 		return null;
 	}
