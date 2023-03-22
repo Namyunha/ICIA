@@ -32,7 +32,7 @@ public class UserRepository {
 		return null;
 	}
 
-	public boolean duCheck(String id) {
+	public boolean duCheck(String id, String nick) {
 		for (UserDTO u : uList) {
 			if (u.getId().equals(id)) {
 				System.out.println("중복된 id가 있습니다");

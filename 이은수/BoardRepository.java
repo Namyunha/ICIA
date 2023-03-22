@@ -13,4 +13,5 @@ public class BoardRepository {
 	public List<BoardDTO> list() {
 		return bList;
 	}
+
 }

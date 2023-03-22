@@ -16,6 +16,7 @@ public class UserDTO {
 	private String pw;
 	private String pNum;
 	private String joinDate = DTF.format(LocalDateTime.now());
+	private String nickname;
 	private int phone;
 	private String board;
 	private List<BoardDTO> boardList = br.list();
@@ -31,6 +32,14 @@ public class UserDTO {
 		this.id = id;
 		this.pw = pw;
 		this.joinDate = joinDate;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 	public String getBoard() {

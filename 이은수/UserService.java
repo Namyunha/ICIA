@@ -8,7 +8,7 @@ public class UserService {
 	String loginId = null;
 	String loginPw = null;
 	Util util = new Util();
-
+	
 	public void save() {
 		System.out.println("======================회원가입======================");
 		while (true) {
@@ -24,10 +24,20 @@ public class UserService {
 			while (true) {
 				System.out.print("ID > ");
 				String id = sc.next();
-				if (re.duCheck(id)) {
+				if (re.duCheck(id, "")) {
 					System.out.println("id를 다시 입력해주세요");
 				} else {
 					userDTO.setId(id);
+					break;
+				}
+			}
+			while (true) {
+				System.out.print("닉네임 > ");
+				String nick = sc.next();
+				if (re.duCheck("", nick)) {
+					System.out.println("이미 존재하는 닉네임입니다.");
+				} else {
+					userDTO.setNickname(nick);
 					break;
 				}
 			}
@@ -60,7 +70,6 @@ public class UserService {
 			return re.returnUser(userDTO);
 		}
 	}
-	
 
 	public void loginCheck() {
 		UserDTO userDTO = new UserDTO(loginId, loginPw);
