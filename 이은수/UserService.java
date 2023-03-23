@@ -13,6 +13,7 @@ public class UserService {
 		System.out.println("======================회원가입======================");
 		while (true) {
 			UserDTO userDTO = new UserDTO();
+			userDTO.setBno("");
 			System.out.print("이름 > ");
 			userDTO.setName(sc.next());
 			System.out.println("주민등록번호 입력");

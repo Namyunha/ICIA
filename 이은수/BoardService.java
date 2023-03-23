@@ -4,9 +4,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class BoardService {
+	boolean changeBoard = false;
 	BoardRepository bs = new BoardRepository();
+	UserRepository us = new UserRepository();
 	Scanner sc = new Scanner(System.in);
-	BoardlistMain bdList = new BoardlistMain();
 	UserDTO userDTO = new UserDTO();
 	List<String> rList = null;
 	ReplyRepository rr = new ReplyRepository();
@@ -14,45 +15,48 @@ public class BoardService {
 
 	public void save(UserDTO userDTO) {
 		BoardDTO boardDTO = new BoardDTO();
+		userDTO.setBno(boardDTO.getBno());
 		boardDTO.setWriter(userDTO.getName());
 		System.out.print("제목 > ");
 		boardDTO.setTitle(sc.next());
 		System.out.println("내용 > ");
-		
-		boardDTO.setContent(sc.nextLine());
-		sc.nextLine();
+		boardDTO.setContent(sc.next());
 		boardDTO.setNick(userDTO.getNickname());
 		bs.save(boardDTO);
+		us.uSave(boardDTO);
 		System.out.println("게시글 등록 완료");
-		findAll(userDTO);
+//		userDTO.setBoard(boardDTO);
 	}
 
 	public void findAll(UserDTO userDTO) {
 		List<BoardDTO> list = bs.list();
-		System.out.println();
-		System.out.println("◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆");
-		System.out.println();
+		System.out.println("\u001B[40m" + "\u001B[33m"
+				+ "◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆");
+		System.out.println("\u001B[40m"
+				+ "                                                                                         "
+				+ "\u001B[33m");
 		System.out.println("※※※※※※※※※※※※※※※※※※※※※※※※※※ ICIA 게시글 ※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※");
-		System.out.println();
+
 		System.out.println("=========================================================================================");
-		System.out.println("No\t\t\t제목\t\t\t작성자\t\t작성일자          ");
+		System.out.println("No\t\t\t제목\t\t\t작성자\t\t작성일자                    ");
 		System.out.println("=========================================================================================");
+
 		for (BoardDTO b : list) {
 			System.out.println(b.toString());
 			System.out.println(
 					"-----------------------------------------------------------------------------------------");
 		}
-		System.out.println();
-		System.out.println("◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆");
-		System.out.println();
-
+		System.out.println("◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆");
+		System.out.println("\u001B[40m"
+				+ "                                                                                         "
+				+ "\u001B[33m");
 		search(userDTO);
 	}
 
 	public void search(UserDTO userDTO) {
 		while (true) {
 			List<BoardDTO> list = bs.list();
-			System.out.println("1.사용자검색  2.제목검색  3.게시글읽기  0.나가기");
+			System.out.println("1.사용자검색  2.제목검색  3.게시글읽기 4.게시글수정 5.게시글삭제  0.나가기                                 ");
 			System.out.print("menu > ");
 			int menu = sc.nextInt();
 			if (menu == 1) {
@@ -88,10 +92,45 @@ public class BoardService {
 			} else if (menu == 3) {
 				read(userDTO);
 				break;
+			} else if (menu == 4) {
+				choice = false;
+				System.out.print("수정할 게시글 번호 > ");
+				String bno = sc.next();
+				List<BoardDTO> bList = us.bList();
+				for (BoardDTO b : bList) {
+					if (b.getBno().equals(bno) && b.getBno().equals(userDTO.getBno())) {
+						System.out.print("수정할 제목 > ");
+						String title = sc.next();
+						System.out.print("수정할 내용 > ");
+						String content = sc.next();
+						b.setTitle(title);
+						b.setContent(content);
+						System.out.println("수정이 ㄴ완료되었씁니다.");
+						choice = true;
+					}
+				}
+				if (!choice) {
+					System.out.println("해당 게시글은 수정할 수 없습니다");
+				}
+
+			} else if (menu == 5) {
+				while (true) {
+					System.out.print("삭제할 게시글 번호 > ");
+					String bno = sc.next();
+					if (bs.delete(bno, userDTO)) {
+						System.out.println("삭제 성공");
+						break;
+					} else {
+						System.out.println("삭제 실패");
+					}
+				}
+
 			} else if (menu == 0) {
+				System.out.println("종료");
 				break;
 			}
 		}
+
 	}
 
 	public void read(UserDTO userDTO) {
@@ -120,7 +159,6 @@ public class BoardService {
 					System.out.println();
 					System.out.println("작성일자: " + b.getPostDate());
 				}
-
 			}
 			System.out.println();
 			System.out.println("※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※");
@@ -128,6 +166,8 @@ public class BoardService {
 			List<ReplyDTO> rList = rr.findAll();
 			if (rList != null) {
 				for (ReplyDTO r : rList) {
+					System.out.print(r.getRno() + 1 + ".");
+					System.out.print(r.getWriter() + ": ");
 					System.out.println(r.getContent());
 				}
 			}
@@ -142,6 +182,7 @@ public class BoardService {
 			if (userDTO == null) {
 				while (true) {
 					System.out.println("0.나가기");
+					System.out.print("menu > ");
 					int i = sc.nextInt();
 					if (i == 0) {
 						choice = true;
@@ -151,13 +192,16 @@ public class BoardService {
 			} else if (userDTO.getName().equals(boardDTO.getWriter())) {
 				while (true) {
 					System.out.println("1.댓글등록 2.댓글수정 3.댓글삭제 0.나가기");
+					System.out.print("menu > ");
 					int i = sc.nextInt();
 					if (i == 1) {
-						reply(boardDTO);
+						reply(boardDTO, userDTO);
 					} else if (i == 2) {
-
+						System.out.print("수정할 댓글 선택 > ");
+						String reple = sc.next();
 					} else if (i == 3) {
-
+						System.out.print("삭제할 댓글 선택 > ");
+						String reple = sc.next();
 					} else if (i == 0) {
 						choice = true;
 						break;
@@ -168,9 +212,10 @@ public class BoardService {
 			} else {
 				while (true) {
 					System.out.println("1.댓글등록 2.UP 3.DOWN 0.나가기");
+					System.out.print("menu > ");
 					int i = sc.nextInt();
 					if (i == 1) {
-						reply(boardDTO);
+						reply(boardDTO, userDTO);
 					} else if (i == 2) {
 
 					} else if (i == 3) {
@@ -189,12 +234,12 @@ public class BoardService {
 
 	}
 
-	public void reply(BoardDTO boardDTO) {
+	public void reply(BoardDTO boardDTO, UserDTO userDTO) {
 		ReplyDTO replyDTO = new ReplyDTO();
 		System.out.print("댓글 > ");
 		String reple = sc.next();
 		replyDTO.setContent(reple);
-		replyDTO.setWriter(boardDTO.getWriter());
+		replyDTO.setWriter(userDTO.getName());
 		replyDTO.setNick(userDTO.getNickname());
 		if (rr.save(replyDTO)) {
 			System.out.println("댓글등록");

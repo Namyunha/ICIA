@@ -8,6 +8,7 @@ public class UserDTO {
 	BoardRepository br = new BoardRepository();
 	private final static DateTimeFormatter DTF = DateTimeFormatter.ofPattern("yy/MM/dd hh:mm:ss");
 	private static int number = 0;
+	private static int num = 100;
 	private int firstNum;
 	private int lastNum;
 	private String uno;
@@ -17,9 +18,9 @@ public class UserDTO {
 	private String pNum;
 	private String joinDate = DTF.format(LocalDateTime.now());
 	private String nickname;
+	private String bno;
 	private int phone;
-	private String board;
-	private List<BoardDTO> boardList = br.list();
+//	private BoardDTO board;
 
 	public UserDTO() {
 		this.uno = "U" + ++number;
@@ -34,6 +35,14 @@ public class UserDTO {
 		this.joinDate = joinDate;
 	}
 
+	public String getBno() {
+		return bno;
+	}
+
+	public void setBno(String bno) {
+		this.bno = bno;
+	}
+
 	public String getNickname() {
 		return nickname;
 	}
@@ -42,13 +51,13 @@ public class UserDTO {
 		this.nickname = nickname;
 	}
 
-	public String getBoard() {
-		return board;
-	}
-
-	public void setBoard(String board) {
-		this.board = board;
-	}
+//	public BoardDTO getBoard() {
+//		return board;
+//	}
+//
+//	public void setBoard(BoardDTO board) {
+//		this.board = board;
+//	}
 
 	public UserDTO(String id, String pw) {
 		this.id = id;

@@ -14,4 +14,14 @@ public class BoardRepository {
 		return bList;
 	}
 
+	public boolean delete(String bno, UserDTO userDTO) {
+		for (BoardDTO b : bList) {
+			if (b.getBno().equals(bno)) {
+				if (userDTO.getBno().equals(b.getBno()))
+					bList.remove(b);
+				return true;
+			}
+		}
+		return false;
+	}
 }

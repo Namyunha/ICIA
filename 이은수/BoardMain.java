@@ -8,17 +8,17 @@ public class BoardMain {
 	Scanner sc = new Scanner(System.in);
 	BoardService bs = new BoardService();
 	BoardRepository br = new BoardRepository();
-	BoardlistMain bl = new BoardlistMain();
 
 	public void main(UserDTO userDTO) {
 		while (true) {
+			System.out.println();
 			System.out.println("\u001B[36m"
 					+ "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" + "\u001B[0m");
 			System.out.println("\u001B[36m"
 					+ "■=================================ICIA 커뮤니티================================■" + "\u001B[0m");
 			System.out.println("\u001B[36m"
 					+ "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" + "\u001B[0m");
-
+			System.out.println();
 			if (userDTO == null) {
 				System.out.println("1.게시글 보기 2.testdata 0.뒤로가기");
 			} else {

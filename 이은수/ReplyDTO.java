@@ -12,11 +12,13 @@ public class ReplyDTO {
 	private String writer;
 	private int up;
 	private int down;
-	private String rno;
+	private int rno;
 	private int num;
 
+	
+	
 	ReplyDTO() {
-		this.rno = "R" + number++;
+		this.rno =  number++;
 		this.writeTime = writeTime;
 	}
 	
@@ -63,11 +65,11 @@ public class ReplyDTO {
 		this.down = num++;
 	}
 
-	public String getRno() {
+	public int getRno() {
 		return rno;
 	}
 
-	public void setRno(String rno) {
+	public void setRno(int rno) {
 		this.rno = rno;
 	}
 	

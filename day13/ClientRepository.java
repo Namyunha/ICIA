@@ -47,6 +47,8 @@ public class ClientRepository {
 		}
 		return list;
 	}
+	
+	
 //	public void transferMy(long money, String account) {
 //		for (ClientDTO c : cList) {
 //			if (c.getAccount().equals(account)) {

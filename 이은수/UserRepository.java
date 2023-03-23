@@ -5,9 +5,22 @@ import java.util.List;
 
 public class UserRepository {
 	List<UserDTO> uList = new ArrayList<>();
+	List<BoardDTO> bList = new ArrayList<>();
 
 	public boolean save(UserDTO userDTO) {
 		return uList.add(userDTO);
+	}
+
+	public void uSave(BoardDTO boardDTO) {
+		bList.add(boardDTO);
+	}
+
+	public List<UserDTO> list() {
+		return uList;
+	}
+
+	public List<BoardDTO> bList() {
+		return bList;
 	}
 
 	public UserDTO user(String id, String pw) {
@@ -17,10 +30,6 @@ public class UserRepository {
 			}
 		}
 		return null;
-	}
-
-	public List<UserDTO> list() {
-		return uList;
 	}
 
 	public UserDTO returnUser(UserDTO userDTO) {

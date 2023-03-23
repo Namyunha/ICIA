@@ -11,7 +11,9 @@ public class UserMain {
 		UserDTO bUser = null;
 		while (true) {
 			Scanner sc = new Scanner(System.in);
-			System.out.println("\u001B[33m"+"==================(●'◡'●)인천일보아카데미(ICIA)================="+"\u001B[0m");
+			
+			System.out.println("\u001B[40m" + "\u001B[33m"
+					+ "============================(●'◡'●)인천일보아카데미(ICIA)==========================="+"\u001B[0m");
 			if (loginOk) {
 				System.out.println("1.개인정보확인 2.개인정보수정 3.ICIA 커뮤니티 4.로그아웃 0.종료");
 				System.out.print("menu > ");
@@ -44,6 +46,7 @@ public class UserMain {
 				}
 			} else if (menu == 4) {
 				if (loginOk) {
+					bUser = null;
 					loginOk = serv.logOut();
 				} else {
 					serv.search();

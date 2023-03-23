@@ -87,7 +87,7 @@ public class BoardDTO {
 
 	@Override
 	public String toString() {
-		return bno + "\t\t\t" + title + "\t\t\t" + writer + " \t\t" + postDate;
+		return bno + "\t\t\t" + title + "\t\t\t" + writer + " \t\t" + postDate+"         ";
 	}
 
 }
