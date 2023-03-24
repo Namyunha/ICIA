@@ -39,7 +39,7 @@ public class BoardMain {
 			} else if (menu == 4) {
 				if (userDTO == null) {
 					break;
-				} else {
+				} else { 
 				}
 			} else if (menu == 0) {
 				break;

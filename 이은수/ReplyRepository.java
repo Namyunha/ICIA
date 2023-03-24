@@ -13,4 +13,13 @@ public class ReplyRepository {
 	public List<ReplyDTO> findAll() {
 		return rList;
 	}
+
+	public ReplyDTO update(int num) {
+		for (ReplyDTO r : rList) {
+			if (num == r.getRno()) {
+				return r;
+			}
+		}
+		return null;
+	}
 }

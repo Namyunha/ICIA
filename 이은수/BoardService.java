@@ -105,7 +105,7 @@ public class BoardService {
 						String content = sc.next();
 						b.setTitle(title);
 						b.setContent(content);
-						System.out.println("수정이 ㄴ완료되었씁니다.");
+						System.out.println("수정이 완료되었습니다.");
 						choice = true;
 					}
 				}
@@ -198,7 +198,16 @@ public class BoardService {
 						reply(boardDTO, userDTO);
 					} else if (i == 2) {
 						System.out.print("수정할 댓글 선택 > ");
-						String reple = sc.next();
+						int rep = sc.nextInt();
+						ReplyDTO replyDTO = rr.update(rep);
+						if (replyDTO != null) {
+							System.out.print("수정 댓글 > ");
+							String reple = sc.next();
+							replyDTO.setContent(reple);
+							System.out.println(replyDTO.getContent());
+						} else {
+							continue;
+						}
 					} else if (i == 3) {
 						System.out.print("삭제할 댓글 선택 > ");
 						String reple = sc.next();
